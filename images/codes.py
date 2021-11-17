@@ -1,12 +1,19 @@
 import pygame
 from pygame.locals import *
 
+
 class Backgrounds:
     def __init__(self, param):
         self.theme = param
 
     def bg_home(self):
         return "images/backgrounds/bg_home{}.png".format(self.theme)
+    
+    def bg_start(self):
+        return "images/backgrounds/bg_start{}.png".format(self.theme)
+
+    def bg_discard(self):
+        return "images/backgrounds/bg_discard{}.png".format(self.theme)
 
     def bg_tutorial(self, page):
         return "images/backgrounds/bg_tutorial{}{}.png".format(page, self.theme)

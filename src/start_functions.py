@@ -74,6 +74,21 @@ class Start:
 
     # def time(self):
 
+    def pieces(self, theme, list1, list2):
+        piece1 = Buttons("pieces/{}piece{}{}".format(theme, list1[0], list2[0]), 816, 95)
+        piece2 = Buttons("pieces/{}piece{}{}".format(theme, list1[1], list2[1]), 816, 225)
+        piece3 = Buttons("pieces/{}piece{}{}".format(theme, list1[2], list2[2]), 816, 355)
+        piece4 = Buttons("pieces/{}piece{}{}".format(theme, list1[3], list2[3]), 816, 485)
+        piece5 = Buttons("pieces/{}piece{}{}".format(theme, list1[4], list2[4]), 816, 615)
+
+        SCREEN.blit(piece1.image, piece1.rect)
+        SCREEN.blit(piece2.image, piece2.rect)
+        SCREEN.blit(piece3.image, piece3.rect)
+        SCREEN.blit(piece4.image, piece4.rect)
+        SCREEN.blit(piece5.image, piece5.rect)
+        pygame.display.update()
+
+
     def discards(self, theme, discard_list):
         BG = Backgrounds(theme)
 
@@ -130,10 +145,24 @@ class Start:
         if len(list_cards) > 0:
             for i in list_cards:
                 bt = Buttons("action_card{}{}".format(theme, i), x, y)
-                pos = pygame.mouse.get_pos()
-                pos_bt = pos[0] - bt.rect.x, pos[1] - bt.rect.y
-                touching_bt = bt.rect.collidepoint(
-                    *pos) and bt.mask.get_at(pos_bt)
                 SCREEN.blit(bt.image, bt.rect)
 
                 y = y + 30
+
+    def print_board(self, board, theme):
+        pos_y = 39
+        for i in range(16):
+            for j in range(8):
+                if j == 0:
+                    pos_x = 397
+                if board[i][j] == 1 and j != 0 and i != 15 and j != 7:
+                    pieces = Buttons("{}p".format(theme), pos_x, pos_y)
+                    SCREEN.blit(pieces.image, pieces.rect)
+                    pygame.display.update()
+                pos_x += 45
+
+            pos_y += 45
+
+    def print_pieces(self, theme, list1, list2):
+        self.pieces(theme, list1, list2)
+        

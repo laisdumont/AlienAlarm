@@ -4,7 +4,8 @@ from src.ab import *
 from src.home import THEME, home
 from src.tutorial import tutorial
 from src.credits import credits
-from src.start import start
+from src.startt import start
+from src.start_functions import Start
 
 pygame.init()
 pygame.display.set_caption("ALIEN ALARM")

@@ -23,10 +23,6 @@ def start(theme):
 
         SCREEN.blit(discard.image, discard.rect)
 
-        """up = Start(theme)
-        algo = up.actions(theme)
-        if algo == False:
-            choice = False"""
         pygame.display.update()
 
         resp = 1

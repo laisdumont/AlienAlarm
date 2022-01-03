@@ -12,23 +12,6 @@ def start(theme):
     choice = True
     resp = 1
 
-    board = [[1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1]]
-
     card_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
             11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
             21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
@@ -210,10 +193,20 @@ def start(theme):
     choice = True
 
     while choice:
-        play.print_board(board, theme)
-        play.print_pieces(theme, card_img, card_rot)        
-
+        play.print_board(theme)
+        # actions = [list_clockwise, list_add, list_anticlockwise,
+        #             list_left, list_down, list_right]
+        actions = [[], [1, 5, 13, 20, 26], [], [14, 15, 22, 28, 29],
+                 [4, 11, 18, 25, 30], [3, 7, 9]]
+        play.pieces(theme, card_img, card_rot)
+        play.print_pieces(theme, card_img, card_rot, actions)
+        play.print_board(theme)
+        
+        play.validate()
+        for i in BOARD:
+            print(i)
         for e in pygame.event.get():
+            
             if e.type == pygame.QUIT:
                 pygame.quit()
                 choice = False

@@ -21,6 +21,9 @@ class Backgrounds:
     def bg_credits(self):
         return "images/backgrounds/bg_credits{}.png".format(self.theme)
 
+    def bg_result(self, res):
+        return "images/backgrounds/{}{}result.png".format(self.theme, res)
+
 
 
 class Buttons:

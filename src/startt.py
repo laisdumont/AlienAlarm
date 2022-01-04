@@ -22,8 +22,8 @@ def start(theme, level):
 
         card_img = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
         card_rot = [1, 2, 3, 4, 5, 6, 8]
-        shuffle(card_img)
-        shuffle(card_rot)
+        # shuffle(card_img)
+        # shuffle(card_rot)
 
         list_clockwise = []
         list_add = []
@@ -191,8 +191,8 @@ def start(theme, level):
         play.print_board(theme)
         # actions = [list_clockwise, list_add, list_anticlockwise,
         #             list_left, list_down, list_right]
-        actions = [[1, 3, 16], [2, 5, 9, 11, 17, 22], [],
-                    [18, 19, 20, 30], [4, 8, 10, 15, 21],
+        actions = [[1, 16], [2, 5, 9, 11, 17], [],
+                    [3, 18, 19, 20], [4, 8, 10, 15, 21],
                     [6, 7, 12, 13, 14]]
         play.pieces(theme, card_img, card_rot, level)
         play.print_pieces(theme, card_img, card_rot, actions, level, card_list)
@@ -202,11 +202,12 @@ def start(theme, level):
         level += 3
         if not choice:
             result(theme, 2)
+            pygame.quit()
         elif level < 3 and choice:
             result(theme, 3)
         elif level >= 4:
             result(theme, 1)
-            choice = False
+            pygame.quit()
         
         for e in pygame.event.get():
             

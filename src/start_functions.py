@@ -127,6 +127,8 @@ class Start:
         pc, pos_vt = self.matrices([card_img[card], card_rot[card]])
         dn = 0
         for i in range(sz):
+            if card > 4 or not self.val():
+                break
             Start(theme)
             self.action_cards(theme, actions[0], 100, 239)
             self.action_cards(theme, actions[1], 183, 239)
@@ -142,7 +144,7 @@ class Start:
             
             if coord == 0 and (st == 0 or st == 2):
                 if st == 2 and dn == 1:
-                    print("escreveu")
+                    print(st, "escreveu")
                     self.write(pc, pos_hr, pos_vt)
                     pos_hr = 0
                     card += 1
@@ -153,7 +155,7 @@ class Start:
                     card_rot[card] == 5
                 else:
                     card_rot[card] += 1
-                print("rodou")
+                print(st, "rodou")
                 self.pieces(theme, card_img, card_rot, lv)
                 pc, pos_vt = self.matrices([card_img[card], card_rot[card]])
                 st = 0
@@ -161,12 +163,11 @@ class Start:
 
             elif coord == 1 and (st == 0 or st == 2):
                 if st == 2 and dn == 1:
-                    print("escreveu")
+                    print(st, "escreveu")
                     self.write(pc, pos_hr, pos_vt)
                     pos_hr = 0
                     card += 1
-                print("entrou")
-                print(pos_vt, "Linha")
+                print(st, "entrou")
                 self.print_pc(theme, pc, pos_hr, pos_vt)
                 pc, pos_vt = self.matrices([card_img[card], card_rot[card]])
                 st = 1
@@ -174,7 +175,7 @@ class Start:
 
             elif coord == 2 and (st == 0 or st == 2):
                 if st == 2 and dn == 1:
-                    print("escreveu")
+                    print(st, "escreveu")
                     self.write(pc, pos_hr, pos_vt)
                     pos_hr = 0
                     card += 1
@@ -184,16 +185,17 @@ class Start:
                     card_rot[card] == 8
                 else:
                     card_rot[card] -= 1
-                print("rodou")
+                print(st, "rodou")
                 self.pieces(theme, card_img, card_rot, lv)
                 pc, pos_vt = self.matrices([card_img[card], card_rot[card]])
                 st = 0
                 continue
 
             elif coord == 3 and (st == 1 or st == 2):
-                print("esquerda")
+                print(st, "esquerda")
                 vai = self.left(pc, pos_hr, pos_vt)
-                print(vai)
+                print("vai:", vai)
+                print(pos_vt)
                 if vai:
                     pos_vt -= 1
                     y = pos_vt
@@ -203,7 +205,7 @@ class Start:
                 continue
 
             elif coord == 4 and st == 1:
-                print("desceu")
+                print(st, "desceu")
                 sos = True
                 while sos:
                     Start(theme)
@@ -225,15 +227,15 @@ class Start:
                 st = 2
                 dn = 1
                 if i == (sz - 1):
-                    print("escreveu")
+                    print(st, "escreveu")
                     self.write(pc, pos_hr, pos_vt)
                     dn = 0
                 continue
 
             elif coord == 5 and (st == 1 or st == 2):
-                print("direita")
+                print(st, "direita")
                 nvai = self.right(pc, pos_hr, pos_vt)
-                print(nvai)
+                print("nvai:", nvai)
                 if nvai:
                     pos_vt += 1
                     y = pos_vt
@@ -410,14 +412,14 @@ class Start:
     def left(self, mat, x, y):
         for i in range(4):
             for j in range(4):
-                if mat[i][j] == 1 and BOARD[x][y-1] == 1:
+                if mat[i][j] == 1 and BOARD[x][y+4] == 1:
                     return False
         return True
 
     def right(self, mat, x, y):
         for i in range(4):
             for j in range(4):
-                if mat[i][j] == 1 and BOARD[x][y+1] == 1:
+                if mat[i][j] == 1 and BOARD[x][y+j+1] == 1:
                     return False
         return True
 
@@ -443,15 +445,14 @@ class Start:
 
     def validate(self, level):
         c = 0
-        for i in range(16):
-            x = 0
-            for j in range(8):
-                if BOARD[i][j] == 0 and x == 0:
-                    x = 1
-            if x == 0:
-                c += 1
-
-        if (c-1) >= (level * 2):
+        for i in range(19):
+            for j in range(14):
+                if BOARD[i][j] == 0 and i < 14:
+                    c += 1
+                    break
+        x = 14 - c
+        print(x)
+        if (x) >= (level * 2):
             return True
         else:
             return False
@@ -476,3 +477,9 @@ class Start:
         SCREEN.blit(card6.image, card6.rect)
         SCREEN.blit(card7.image, card7.rect)
         SCREEN.blit(card8.image, card8.rect)
+    
+    def val(self):
+        for i in range(len(BOARD[0])):
+            if BOARD[0][i] == 1 and i > 3 and i < 10:
+                return False
+        return True
